@@ -66,3 +66,6 @@ gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resour
 
 # React-Rails for Front end framework
  gem 'react-rails', '~> 1.0'
+
+#A gem to make all the responses of rails methods in json format by default
+ gem 'responders'
