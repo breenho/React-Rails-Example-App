@@ -1,19 +1,22 @@
 var AllItems = React.createClass({
-	
-	getInitialState() {
-		return { items : []}
-	},
 
-	componentDidMount() {
-		$.getJSON('/api/v1/items.json', (response) => {this.setState({items: response})});
+	handleDelete(id){
+		$.ajax({
+			url: 'api/v1/items/'+id,
+			type: 'DELETE',
+			success: () =>{				
+				this.props.handleDeleteItem(id);
+				alert("Item Deleted Successfully")
+			}
+		});
 	},
-
 	render() {
-		var items = this.state.items.map((item)=>{
+		var items = this.props.items.map((item)=>{
 			return(
 				<div key={item.id}>
 					<h3> {item.name} </h3>
 					<p> {item.description} </p>
+					<button onClick={this.handleDelete.bind(this,item.id)}>Delete</button><hr/>
 				</div>
 			)
 		});

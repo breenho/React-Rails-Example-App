@@ -3,9 +3,17 @@ class Api::V1::ItemsController < Api::V1::BaseController
 		respond_with Item.all
 	end
 
+	def create		
+		respond_with :api, :v1, Item.create(item_params)
+	end
+
+	def destroy
+		respond_with Item.destroy(params[:id])
+	end
+
 	private
 
 	def item_params
-		params.require(:item).permit(:id,:name,:description)
+		params.require(:item).permit(:name,:description)
 	end
 end
