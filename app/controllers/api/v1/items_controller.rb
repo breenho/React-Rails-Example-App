@@ -11,6 +11,12 @@ class Api::V1::ItemsController < Api::V1::BaseController
 		respond_with Item.destroy(params[:id])
 	end
 
+	def update
+		item = Item.find_by_id(params[:id])
+		item.update_attributes(item_params)
+		respond_with item, json: item
+	end
+
 	private
 
 	def item_params

@@ -16,11 +16,28 @@ var Body = React.createClass({
 		});
 		this.setState({items:newItems})
 	},
+	afterItemUpdate(item) {
+		var items = this.state.items.filter((i) => { return i.id != item.id }); 
+		items.push(item); 
+		this.setState({items: items });
+	},
+
+	handleUpdate(item) {
+		$.ajax({
+			url: '/api/v1/items/'+item.id,
+			type: 'PUT',
+			data: {item:{name:item.name, description:item.description}},
+			success: (response) => {
+				this.afterItemUpdate(item);
+				alert("Item Updated Successfully");
+			}
+		});
+	},
 	render() {
 		return(
 		<div>
 			<NewItem handleSubmit={this.handleSubmit}/>
-			<AllItems items={this.state.items} handleDeleteItem={this.handleDeleteItem}/>			
+			<AllItems items={this.state.items} handleUpdate={this.handleUpdate} handleDeleteItem={this.handleDeleteItem}/>
 		</div>
 		)
 	}
